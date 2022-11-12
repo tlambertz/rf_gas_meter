@@ -1,0 +1,6 @@
+https://www.tindie.com/products/vysocan/rfm69-radio-node-mini/
+
+My configuration:
+16MHz, RFM69HW-868 long reach
+Spring 868MHz Antenna
+No Battery (non available at the time)
