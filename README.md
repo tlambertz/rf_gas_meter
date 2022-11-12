@@ -84,6 +84,9 @@ For a Visual identification you can refer to [Moteino's Transceiver Page](https:
 
 I have the "discontinued" RFM69HW
 
+##### Testing
+Flash one board with `node_test`, the other with `PiGatewaySimple`
+
 ##### Optimizing range.
 Default: I receive (after retries!) only ~50% of packages on cellar. Lets improve settings for the RFM69.
 
@@ -95,7 +98,9 @@ Datasheet tells us we get -120dBm when:
 
 Change Registers:
 - RegBitrate* (0x04/0x05): Set bitrate to 1200 baud
-- RegTestLna (0x58): Controlls Sensitivity Boost. Use 0x2D for Hihg sensitivity mode.
+- RegTestLna (0x58): Controlls Sensitivity Boost. Use 0x2D for High sensitivity mode.
+
+
 
 
 
