@@ -76,58 +76,17 @@ void setup() {
 byte ackCount=0;
 uint32_t packetCount = 0;
 void loop() {
-  //process any serial input
-  if (Serial.available() > 0)
-  {
-    char input = Serial.read();
-    if (input == 'r') //d=dump all register values
-      radio.readAllRegs();
-
-    if (input == 'p')
-    {
-      spy = !spy;
-      radio.spyMode(spy);
-      Serial.print("SpyMode mode ");Serial.println(spy ? "on" : "off");
-    }
-    
-    if (input == 't')
-    {
-      byte temperature =  radio.readTemperature(-1); // -1 = user cal factor, adjust for correct ambient
-      byte fTemp = 1.8 * temperature + 32; // 9/5=1.8
-      Serial.print( "Radio Temp is ");
-      Serial.print(temperature);
-      Serial.print("C, ");
-      Serial.print(fTemp); //converting to F loses some resolution, obvious when C is on edge between 2 values (ie 26C=78F, 27C=80F)
-      Serial.println('F');
-    }
-  }
-
   if (radio.receiveDone())
   {
-    Serial.print("#[");
-    Serial.print(++packetCount);
-    Serial.print(']');
-    Serial.print('[');Serial.print(radio.SENDERID, DEC);Serial.print("] ");
-    if (spy) Serial.print("to [");Serial.print(radio.TARGETID, DEC);Serial.print("] ");
     for (byte i = 0; i < radio.DATALEN; i++)
       Serial.print((char)radio.DATA[i]);
-    Serial.print("   [RX_RSSI:");Serial.print(radio.RSSI);Serial.print("]");
-    
+    Serial.print(",");Serial.print(radio.RSSI);
+
     if (radio.ACKRequested())
     {
       byte theNodeID = radio.SENDERID;
       radio.sendACK();
-      Serial.print(" - ACK sent.");
     }
     Serial.println();
   }
-  //Serial.println(radio.readRSSI());
-}
-
-void Blink(byte PIN, int DELAY_MS)
-{
-  /*pinMode(PIN, OUTPUT);
-  digitalWrite(PIN,HIGH);
-  delay(DELAY_MS);
-  digitalWrite(PIN,LOW);*/
 }
